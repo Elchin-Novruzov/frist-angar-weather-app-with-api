@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+				<title>Hava durumu</title>
+				
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+
+
+</head>
+<style>
+				body{
+				font-family: 'montserrat', sans-serif;
+				color: #fff;
+				background: url('İmg/sehir.jpg');
+				margin: 0;
+				padding: 0;
+				background-repeat: no-repeat;
+				height: 100vh;
+}
+.app{
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				text-align: center;
+				background: rgb(0,0,0,0.66);
+				height: 100vh;
+}
+.header{
+				padding: 50px 20px 30px 20px;
+}
+.header h1{
+								font-size: 50px;
+								color: #fbb034;
+}
+.header input{
+				width: 100%;
+				padding: 10px;
+				background: transparent;
+				border: 0;
+				outline: none;
+				border-bottom: 2px solid #fbb034;
+				text-align: center;
+				color: #f2f2f2;
+				font-size: 20px;
+}
+.city{
+				font-size: 35px;
+				font-weight: 500;
+				margin-bottom: 10px;
+				text-shadow: 1px 3px rgba(0,0,0,0.8);
+}
+.temp{
+				font-size: 100px;
+				font-weight: 700;
+				margin-bottom: 15px;
+				text-shadow: 1px 5px rgba(0,0,0,0.1);
+}
+.desc{
+				text-shadow: 1px 3px rgba(0,0,0,0.8);
+				font-weight: 420;
+				margin-bottom: 10px;
+				font-size: 25px;
+				font-style: italic;
+}
+.minmax{
+				font-size: 23x;
+				text-shadow: 1px 3px rgba(0,0,0,0.8);
+}
+
+</style>
+
+<!-- ------------------------------------------------------------------------------------------------------------------------ -->
+<body>
+		
+		<div class="app">
+						<div class="header">
+										<h1>Hava durumu</h1>
+             <input type="text" id="searchBar" placeholder="Şehir giriniz...">
+            
+   </div>
+						<div class="content">
+										<div class="city">Tokyo</div>
+										<div class="temp">15°C</div>
+										<div class="desc">Yağmurlu</div>
+										<div class="minmax">11°c/17°c</div>
+						</div>
+		</div>
+				
+				<!-- ------------------------------------------------------------------------------------------------------------------------ -->
+				
+<script>
+				const  url = "http://api.openweathermap.org/data/2.5/";	
+     const key = '0513df0b52957e0fa40eb17328a03d41';
+
+const searchBar = document.getElementById('searchBar');
+
+const setQuery = (e) => {
+				if(e.keyCode == '13') {
+					
+								getResult(searchBar.value);
+				}
+}
+
+
+const getResult = (cityName) => {
+			let query = `${url}weater?q=${cityName}&appid=${key}&units=metric&lang=tr`
+ fetch(query)
+ .then(weather => {
+   return weather.json()
+  })
+    .then(displayResult)
+}
+	
+
+const displayResult = (result) => {
+    let city = document.querySelctor(".city")
+    city.innerHTML = `${result.name}, ${result.sys.country}`
+    
+    let temp = document.querySelctor(".temp")
+     city.innerHTML = `${Math.round(result.main.temp)}°C`
+     
+     let desc = document.querySelctor(".desc")
+      desc.innerHTML = result.weather[0].description
+
+     let minmax = document.querySelctor(".minmax");
+       minmax.innerHTML = `${Math.round(result.main.temp_min)}°c/ ${Math.round(result.main.temp_min)}°c`
+}
+
+
+
+
+
+
+searchBar.addEventListener('keypress', setQuery);
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+</script>
+</body>
+</html>
